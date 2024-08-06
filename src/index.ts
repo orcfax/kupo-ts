@@ -3,6 +3,8 @@ import { components, paths } from "./schema";
 import pLimit from "p-limit";
 import { Client } from "./types";
 
+export * as Schema from "./schema";
+
 type Result<T> = Error | T;
 
 // FIXME : Can't make the health ep the right type
