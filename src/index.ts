@@ -31,8 +31,8 @@ const middleware: Middleware = {
   async onRequest(req, _options) {
     if (req.headers) {
       req.headers.set("Accept", "application/json");
+      return req;
     }
-    return req;
   },
   async onResponse(res, _options) {
     return res;
