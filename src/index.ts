@@ -1,5 +1,5 @@
 import createClient, { Middleware } from "openapi-fetch";
-import { paths } from "./schema";
+import { paths } from "./schema.ts";
 import pLimit from "p-limit";
 import {
   DatumHash,
@@ -17,7 +17,7 @@ import {
   Result,
   ScriptHash,
   ScriptOrNull,
-} from "./types";
+} from "./types.ts";
 
 function error(msg: string | undefined) {
   return new Error(msg || "");
