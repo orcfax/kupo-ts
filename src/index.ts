@@ -29,7 +29,9 @@ function dataOrErr<T>(res: { data?: T; error?: { hint?: string } }): Result<T> {
 
 const middleware: Middleware = {
   async onRequest(req, _options) {
-    req.headers.set("Accept", "application/json");
+    if (req.headers) {
+      req.headers.set("Accept", "application/json");
+    }
     return req;
   },
   async onResponse(res, _options) {
