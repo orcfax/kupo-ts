@@ -13,6 +13,7 @@ Manually patch the following:
 
 + Delete superfluous `["properties"]` picked up by LSP
 + In paths, edit variables from kebab to snake case. For example: `datum-hash => datum_hash`
++ `spent` and `unspent` have type `null` not `string`
 
 
 

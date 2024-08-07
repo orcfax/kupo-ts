@@ -27,12 +27,10 @@ function dataOrErr<T>(res: { data?: T; error?: { hint?: string } }): Result<T> {
   return res.data || error(res.error?.hint);
 }
 
-const middleware: Middleware = {
+export const defaultMiddleware: Middleware = {
   async onRequest(req, _options) {
-    if (req.headers) {
-      req.headers.set("Accept", "application/json");
-      return req;
-    }
+    req.headers.set("Accept", "application/json");
+    return req;
   },
   async onResponse(res, _options) {
     return res;
@@ -43,10 +41,10 @@ export class Kupo {
   baseUrl: string;
   _: KupoClient;
 
-  constructor(baseUrl: string | URL) {
+  constructor(baseUrl: string | URL, middleware? : Middleware) {
     this.baseUrl = baseUrl.toString();
     this._ = createClient<paths>({ baseUrl: baseUrl.toString() });
-    this._.use(middleware);
+    if (middleware) this._.use(middleware);
   }
 
   // async getHealth() { //: Promise<Result<Health>> {
