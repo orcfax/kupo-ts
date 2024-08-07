@@ -1,46 +1,23 @@
 import createClient, { Middleware } from "openapi-fetch";
-import { components, paths } from "./schema";
+import { paths } from "./schema";
 import pLimit from "p-limit";
-import { Client } from "./types";
-
-export * as Schema from "./schema";
-
-type Result<T> = Error | T;
-
-// FIXME : Can't make the health ep the right type
-// type Health = components["schemas"]["Health"]
-type Health =
-  paths["/health"]["get"]["responses"]["200"]["content"]["application/json;charset=utf-8"];
-
-type Pattern = components["schemas"]["Pattern"];
-type Patterns = Pattern[];
-type PutPatternsContent = {
-  patterns: Patterns;
-  rollback_to: components["schemas"]["ForcedRollback"]["rollback_to"];
-  limit?: components["schemas"]["ForcedRollback"]["limit"];
-};
-
-type GetMatchesQuery = paths["/matches"]["get"]["parameters"]["query"];
-type Match = components["schemas"]["Match"];
-type Matches = Match[];
-
-type DatumHash =
-  paths["/datums/{datum_hash}"]["get"]["parameters"]["path"]["datum_hash"];
-type Datum = components["schemas"]["Datum"];
-type DatumOrNull = Datum | null;
-type ScriptHash =
-  paths["/scripts/{script_hash}"]["get"]["parameters"]["path"]["script_hash"];
-type Script = components["schemas"]["Script"];
-type ScriptOrNull = Script | null;
-
-type MatchWithoutHash = Omit<Match, "datum_hash" | "script_hash">;
-type MatchResolved = MatchWithoutHash & {
-  script?: ScriptOrNull;
-  datum?: DatumOrNull;
-};
-
-type Point = components["schemas"]["Point"];
-type Points = Point[];
+import {
+  DatumHash,
+  DatumOrNull,
+  GetMatchesQuery,
+  KupoClient,
+  Match,
+  Matches,
+  MatchResolved,
+  Pattern,
+  Patterns,
+  Point,
+  Points,
+  PutPatternsContent,
+  Result,
+  ScriptHash,
+  ScriptOrNull,
+} from "./types";
 
 function error(msg: string | undefined) {
   return new Error(msg || "");
@@ -62,7 +39,7 @@ const middleware: Middleware = {
 
 export class Kupo {
   baseUrl: string;
-  _: Client<paths>;
+  _: KupoClient;
 
   constructor(baseUrl: string | URL) {
     this.baseUrl = baseUrl.toString();
