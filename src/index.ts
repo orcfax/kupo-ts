@@ -27,13 +27,31 @@ function dataOrErr<T>(res: { data?: T; error?: { hint?: string } }): Result<T> {
   return res.data || error(res.error?.hint);
 }
 
-export const defaultMiddleware: Middleware = {
-  async onRequest(req, _options) {
-    req.headers.set("Accept", "application/json");
-    return req;
+export const logUrls: Middleware = {
+  async onRequest({ request, options, schemaPath, params }) {
+    request.headers.set("Accept", "application/json");
+    let url = request.url 
+    url = url.replace("?unspent=true", "?unspent").replace("?spent=true", "?spent")
+    const nReq = new Request(url , request)
+    console.log(url)
+    return nReq;
   },
-  async onResponse(res, _options) {
-    return res;
+  async onResponse({ request, response, options }) {
+    return response
+  },
+};
+
+
+export const defaultMiddleware: Middleware = {
+  async onRequest({ request, options }) {
+    request.headers.set("Accept", "application/json");
+    let url = request.url 
+    url = url.replace("?unspent=true", "?unspent").replace("?spent=true", "?spent")
+    const nReq = new Request(url , request)
+    return nReq
+  },
+  async onResponse({ request, response, options }) {
+    return response
   },
 };
 
@@ -58,6 +76,7 @@ export class Kupo {
     pattern: Pattern,
     query?: GetMatchesQuery,
   ): Promise<Result<Matches>> {
+    console.log("KUPO", pattern, query)
     return await this._.GET("/matches/{pattern}", {
       params: { query, path: { pattern } },
     }).then(dataOrErr);

@@ -893,7 +893,7 @@ export interface components {
     "slot-no": number;
     /** @description A query flag (i.e. `?spent`) to filter matches by status, to get only 'spent' matches.  Note that, when running kupo with `--prune-utxo`, this will always return an empty list of results.
      *      */
-    spent: null;
+    spent: boolean;
     /** @description Fetch only results spent after (inclusive) some point.
      *
      *     > <sup><strong>NOTE</strong></sup> <br/>
@@ -924,7 +924,7 @@ export interface components {
     "transaction-id": components["schemas"]["TransactionId"];
     /** @description A query flag (i.e. `?unspent`) filter matches by status, to get only 'unspent' matches.
      *      */
-    unspent: null;
+    unspent: boolean;
   };
   requestBodies: never;
   headers: {
