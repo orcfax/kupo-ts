@@ -12,7 +12,10 @@ Grab the yaml from kupo
 Manually patch the following:
 
 + Delete superfluous `["properties"]` picked up by LSP
-+ In paths, edit variables from kebab to snake case. For example: `datum-hash => datum_hash`
++ In paths, edit variables from kebab to snake case. For example: 
+    + `datum-hash => datum_hash`
+    + `script-hash => script_hash`
+    + `slot-no => slot_no`
 + `spent` and `unspent` have type `boolean` not `string`
 (see https://github.com/CardanoSolutions/kupo/issues/179)
 

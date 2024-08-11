@@ -286,7 +286,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/checkpoints/{slot-no}": {
+  "/checkpoints/{slot_no}": {
     parameters: {
       query?: never;
       header?: never;
@@ -309,7 +309,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/metadata/{slot-no}": {
+  "/metadata/{slot_no}": {
     parameters: {
       query?: never;
       header?: never;

@@ -141,6 +141,12 @@ export class Kupo {
     return await this._.GET("/checkpoints").then(dataOrErr);
   }
 
+  async getCheckpointBySlot(slotNo : number) : Promise<Result<Point | null>> {
+    return await this._.GET("/checkpoints/{slot_no}", {
+      params: { path: { slot_no: slotNo } },
+    }).then(dataOrErr);
+  }
+
   async getLatest(): Promise<Result<Point>> {
     return this.getCheckpoints().then((res) => {
       if (res instanceof Error) return res;
