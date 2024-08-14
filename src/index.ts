@@ -33,7 +33,6 @@ export const logUrls: Middleware = {
     let url = request.url 
     url = url.replace("?unspent=true", "?unspent").replace("?spent=true", "?spent")
     const nReq = new Request(url , request)
-    console.log(url)
     return nReq;
   },
   async onResponse({ request, response, options }) {
@@ -76,7 +75,6 @@ export class Kupo {
     pattern: Pattern,
     query?: GetMatchesQuery,
   ): Promise<Result<Matches>> {
-    console.log("KUPO", pattern, query)
     return await this._.GET("/matches/{pattern}", {
       params: { query, path: { pattern } },
     }).then(dataOrErr);
