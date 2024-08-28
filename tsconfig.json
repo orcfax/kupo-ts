@@ -3,10 +3,10 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "noErrorTruncation" : true,
-    "outDir" : "./dist",
-    "noEmit" : true,
-    "allowImportingTsExtensions" : true
+    "noErrorTruncation": true,
+    "outDir": "./dist",
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src/**/*"]
 }

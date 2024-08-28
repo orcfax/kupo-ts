@@ -30,27 +30,30 @@ function dataOrErr<T>(res: { data?: T; error?: { hint?: string } }): Result<T> {
 export const logUrls: Middleware = {
   async onRequest({ request, options, schemaPath, params }) {
     request.headers.set("Accept", "application/json");
-    let url = request.url 
-    url = url.replace("?unspent=true", "?unspent").replace("?spent=true", "?spent")
-    const nReq = new Request(url , request)
+    let url = request.url;
+    url = url
+      .replace("?unspent=true", "?unspent")
+      .replace("?spent=true", "?spent");
+    const nReq = new Request(url, request);
     return nReq;
   },
   async onResponse({ request, response, options }) {
-    return response
+    return response;
   },
 };
-
 
 export const defaultMiddleware: Middleware = {
   async onRequest({ request, options }) {
     request.headers.set("Accept", "application/json");
-    let url = request.url 
-    url = url.replace("?unspent=true", "?unspent").replace("?spent=true", "?spent")
-    const nReq = new Request(url , request)
-    return nReq
+    let url = request.url;
+    url = url
+      .replace("?unspent=true", "?unspent")
+      .replace("?spent=true", "?spent");
+    const nReq = new Request(url, request);
+    return nReq;
   },
   async onResponse({ request, response, options }) {
-    return response
+    return response;
   },
 };
 
@@ -58,7 +61,7 @@ export class Kupo {
   baseUrl: string;
   _: KupoClient;
 
-  constructor(baseUrl: string | URL, middleware? : Middleware) {
+  constructor(baseUrl: string | URL, middleware?: Middleware) {
     this.baseUrl = baseUrl.toString();
     this._ = createClient<paths>({ baseUrl: baseUrl.toString() });
     if (middleware) this._.use(middleware);
@@ -139,7 +142,7 @@ export class Kupo {
     return await this._.GET("/checkpoints").then(dataOrErr);
   }
 
-  async getCheckpointBySlot(slotNo : number) : Promise<Result<Point | null>> {
+  async getCheckpointBySlot(slotNo: number): Promise<Result<Point | null>> {
     return await this._.GET("/checkpoints/{slot_no}", {
       params: { path: { slot_no: slotNo } },
     }).then(dataOrErr);
