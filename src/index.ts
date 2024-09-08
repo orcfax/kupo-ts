@@ -112,7 +112,7 @@ export class Kupo {
 
   async resolveMatches(
     ms: Match[],
-    concurrency = 100,
+    concurrency = 30,
   ): Promise<MatchResolved[]> {
     const limit = pLimit(concurrency);
     const mrs = ms.map((m) => limit(() => this.resolveMatch(m)));
